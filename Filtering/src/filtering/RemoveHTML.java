@@ -6,7 +6,9 @@
 package filtering;
 
 import StringManipulation.FilterHTML;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -125,64 +127,47 @@ public class RemoveHTML extends javax.swing.JFrame {
     private void jButtonRemoveHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveHTMLActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonRemoveHTMLActionPerformed
-
+/************************************************REMOVES THE HTML TAGS************************************************/
     private void jButtonRemoveHTMLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRemoveHTMLMouseClicked
         // TODO add your handling code here:
         String str = jTextAreaOriginalHTML.getText();
         FilterHTML filter = new FilterHTML();
         str = filter.removeHTML(str);
         jTextAreaFilteredHTML.setText(str);
-        
-        HashMap<String, Integer> output = new HashMap<>();
-        for (String word : str.split("\\W")) {
-            if (word.isEmpty()) {
-                continue;
-            }
-            if (output.containsKey(word.toLowerCase())) {
-                output.put(word.toLowerCase(), output.get(word.toLowerCase()) + 1);
-            } else {
-                output.put(word.toLowerCase(), 1);
-            }
-        }
-        for (Map.Entry<String, Integer> entry : output.entrySet()) {
-            if (entry.getValue() >= 10) {
-                jTextAreaWordsCounted.append(entry.getKey() + " = " + entry.getValue() + "\n");
-            } else {
-                continue;
-            }
-        }
-    
     }//GEN-LAST:event_jButtonRemoveHTMLMouseClicked
-
+/************************************************COUNTS THE WORD IN THE FILTERED TEXT AREA************************************************/
     private void jButtonCountWordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCountWordsActionPerformed
         // TODO add your handling code here:
-        String sentence = jTextAreaOriginalHTML.getText();
-        FilterHTML filter = new FilterHTML();
-        sentence = filter.removeHTML(sentence);
-        HashMap<String, Integer> output = new HashMap<>();
-        for (String word : sentence.split("\\W")) {
-            if (word.isEmpty()) {
-                continue;
-            }
-            if (output.containsKey(word.toLowerCase())) {
-                output.put(word.toLowerCase(), output.get(word.toLowerCase()) + 1);
-            } else {
-                output.put(word.toLowerCase(), 1);
+        String sentence = jTextAreaFilteredHTML.getText();
+//        sentence = sentence.replaceAll("\\<.*?\\>", "");
+        String[] words = sentence.split("\\W");
+        List<String> uniqueWords = new ArrayList();
+        List<String> finalOutput = new ArrayList();
+        String output = "";
+        for (String word : words) {
+            if (!uniqueWords.contains(word) && !word.isEmpty()) {
+                uniqueWords.add(word);
             }
         }
-        output.entrySet().stream().forEach((entry) -> {
-            if (entry.getValue() >= 10) {
-                jTextAreaWordsCounted.append(entry.getKey() + " = " + entry.getValue() + "\n");
-            } else {
+        for (String text : uniqueWords) {
+            int counter = 0;
+            for (String original : words) {
+                if (original.equals(text)) {
+                    counter++;
+                }
             }
-        });
-    
+            finalOutput.add(text + " = " + counter);
+        }
+        for (String res : finalOutput) {
+            output += res + "\n";
+        }
+        jTextAreaWordsCounted.setText(output);
     }//GEN-LAST:event_jButtonCountWordsActionPerformed
 
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -193,32 +178,21 @@ public static void main(String args[]) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RemoveHTML.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RemoveHTML.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RemoveHTML.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RemoveHTML.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoveHTML.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(RemoveHTML.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(RemoveHTML.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(RemoveHTML.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
