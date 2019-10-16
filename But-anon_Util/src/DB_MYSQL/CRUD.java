@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DB_MYSQL;
 
 import java.sql.Connection;
@@ -16,21 +15,50 @@ import java.sql.Statement;
  * @author but-anonju_sd2022
  */
 public class CRUD {
+
     
-//            try {
-//                Class.forName("com.mysql.jdbc.Driver");
-//                Connection con = DriverManager.getConnection(
-//                        "jdbc:mysql://localhost:3306/sonoo", "root", "");
-////here sonoo is database name, root is username and password 
-////                inserts data
-//                Statement stmt = con.createStatement();
-////                retrieves data
-//                ResultSet rs = stmt.executeQuery("select * from emp");
-//                while (rs.next()) {
-//                    System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-//                }
-//                con.close();
-//            } catch (Exception e) {
-//                System.out.println(e);
-//            }
+
+    public Connection connectToDB() {
+        try {
+            String myDriver = "com.mysql.jdbc.Driver";
+            String myUrl = "jdbc:mysql://localhost/butanon";
+            Class.forName(myDriver);
+            Connection connection = DriverManager.getConnection(myUrl, "root", "");
+            return connection;
+        } catch (Exception e) {
+            System.err.println("An error occur!");
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public boolean addData(String sqlString) {
+        System.out.println(sqlString);
+        try {
+            Connection connection = connectToDB();
+            java.sql.Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlString);
+            connection.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public ResultSet getData(String query) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = connectToDB();
+            java.sql.Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            con.close();
+            return rs;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
 }

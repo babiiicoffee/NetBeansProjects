@@ -5,11 +5,13 @@
  */
 package filtering;
 
+import DB_MYSQL.CRUD;
 import StringManipulation.FilterHTML;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -89,17 +91,17 @@ public class RemoveHTML extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(201, 201, 201)
+                                .addGap(99, 99, 99)
                                 .addComponent(jButtonRemoveHTML))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(213, 213, 213)
+                                .addGap(113, 113, 113)
                                 .addComponent(jButtonCountWords)))
-                        .addGap(0, 210, Short.MAX_VALUE)))
+                        .addGap(0, 102, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -127,7 +129,10 @@ public class RemoveHTML extends javax.swing.JFrame {
     private void jButtonRemoveHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveHTMLActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonRemoveHTMLActionPerformed
-/************************************************REMOVES THE HTML TAGS************************************************/
+    /**
+     * **********************************************REMOVES THE HTML
+     * TAGS***********************************************
+     */
     private void jButtonRemoveHTMLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRemoveHTMLMouseClicked
         // TODO add your handling code here:
         String str = jTextAreaOriginalHTML.getText();
@@ -135,11 +140,14 @@ public class RemoveHTML extends javax.swing.JFrame {
         str = filter.removeHTML(str);
         jTextAreaFilteredHTML.setText(str);
     }//GEN-LAST:event_jButtonRemoveHTMLMouseClicked
-/************************************************COUNTS THE WORD IN THE FILTERED TEXT AREA************************************************/
+    /**
+     * **********************************************COUNTS THE WORD IN THE
+     * FILTERED TEXT AREA***********************************************
+     */
     private void jButtonCountWordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCountWordsActionPerformed
         // TODO add your handling code here:
+        CRUD c = new CRUD();
         String sentence = jTextAreaFilteredHTML.getText();
-//        sentence = sentence.replaceAll("\\<.*?\\>", "");
         String[] words = sentence.split("\\W");
         List<String> uniqueWords = new ArrayList();
         List<String> finalOutput = new ArrayList();
@@ -156,12 +164,44 @@ public class RemoveHTML extends javax.swing.JFrame {
                     counter++;
                 }
             }
+
             finalOutput.add(text + " = " + counter);
+        
+                try {
+                    // create a mysql database connection
+                    String myDriver = "com.mysql.jdbc.Driver";
+                    String myUrl = "jdbc:mysql://localhost/butanon";
+                    Class.forName(myDriver);
+                    Connection conn = DriverManager.getConnection(myUrl, "root", "");
+                    // the mysql insert statement
+                    String query = " insert into wordcount(Word,Count,School)"
+                            + " values (?,?,?)";
+                    // create the mysql insert preparedstatement
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString(1, text);
+                    preparedStmt.setInt(2, counter);
+                    preparedStmt.setString(3, "University of Bohol");
+                    // execute the preparedstatement
+                    preparedStmt.execute();
+
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                    e.getMessage();
+                }
+            
+
         }
         for (String res : finalOutput) {
             output += res + "\n";
         }
         jTextAreaWordsCounted.setText(output);
+//        try {
+//          
+//            c.addData(output);
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
     }//GEN-LAST:event_jButtonCountWordsActionPerformed
 
     /**
