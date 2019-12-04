@@ -174,13 +174,13 @@ public class RemoveHTML extends javax.swing.JFrame {
                     Class.forName(myDriver);
                     Connection conn = DriverManager.getConnection(myUrl, "root", "");
                     // the mysql insert statement
-                    String query = " insert into wordcount(Word,Count,School)"
+                    String query = " insert into countwords_usc(Word,Count,School)"
                             + " values (?,?,?)";
                     // create the mysql insert preparedstatement
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
                     preparedStmt.setString(1, text);
                     preparedStmt.setInt(2, counter);
-                    preparedStmt.setString(3, "University of Bohol");
+//                    preparedStmt.setString(3, "Mindanao State University (main)");
                     // execute the preparedstatement
                     preparedStmt.execute();
 
