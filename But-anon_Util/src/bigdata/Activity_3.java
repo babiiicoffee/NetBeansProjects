@@ -348,7 +348,7 @@ public class Activity_3 extends javax.swing.JFrame {
                     for (int h = 0;; h++) {//
                         for (int i = 0; i < 60; i++) { // this for minutes
                             for (int j = 0; j < 60; j++) { // j is for the seconds
-                                for (int k = 0; k < 60; k++) { // k is the centiseconds
+                                for (int k = 0; k < 100; k++) { // k is the centiseconds
                                     if (stop) {
                                         break;
                                     }
