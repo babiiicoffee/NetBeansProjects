@@ -21,7 +21,8 @@ public class CRUD {
     public Connection connectToDB() {
         try {
             String myDriver = "com.mysql.jdbc.Driver";
-            String myUrl = "jdbc:mysql://172.16.3.17/zjudilyn";
+//            String myUrl = "jdbc:mysql://172.16.3.17/zjudilyn";
+            String myUrl = "jdbc:mysql://localhost/butanon";
             Class.forName(myDriver);
             Connection connection = DriverManager.getConnection(myUrl, "root", "");
             return connection;
