@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author but-anonju_sd2082
  */
-public class Activity {
+public class SQLSpeedTest {
 
     /*
     
@@ -139,7 +139,7 @@ public class Activity {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Activity.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SQLSpeedTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -217,7 +217,7 @@ public class Activity {
 
     public static void main(String args[]) {
         
-        Activity act = new Activity();
+        SQLSpeedTest act = new SQLSpeedTest();
         act.Activity_1(); // INSERT 1000
         act.Activity_3(); // DELETE 1000
         act.Activity_2(); // INSERT 300

@@ -16,7 +16,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
@@ -26,7 +25,7 @@ import org.bson.Document;
  *
  * @author 2ndyrGroupB
  */
-public class SpeedTest {
+public class MogoDBSpeedTest {
 
     public void insertWithConnection() {
         long start = new Date().getTime() / 1000;
@@ -293,7 +292,7 @@ public class SpeedTest {
     }
 
     public static void main(String[] args) {
-        SpeedTest db = new SpeedTest();
+        MogoDBSpeedTest db = new MogoDBSpeedTest();
 //        try {
 //            db.insertWithConnection();
 //            db.deleteWithConnection();
