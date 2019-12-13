@@ -5,7 +5,6 @@
  */
 package mongodbspeedtest;
 
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.DB;
@@ -21,6 +20,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.Document;
+
 /**
  *
  * @author 2ndyrGroupB
@@ -36,7 +36,7 @@ public class MogoDBSpeedTest {
                 mongoLogger.setLevel(Level.SEVERE); // level of the connection
                 MongoClient mongoClient = new MongoClient("localhost", 27017); // create new client
                 DB db = mongoClient.getDB("butanon"); // get the database
-                DBCollection collection = db.getCollection("dataCollection"); // create new colection
+                DBCollection collection = db.getCollection("myConnection"); // create new colection
                 BasicDBObject object = new BasicDBObject("Column_1", i) // create a new object
                         .append("Column_2", i + 1)
                         .append("Column_3", i + 2)
@@ -61,7 +61,7 @@ public class MogoDBSpeedTest {
             mongoLogger.setLevel(Level.SEVERE); // level of the connection
             MongoClient mongoClient = new MongoClient("localhost", 27017); // create new client
             DB db = mongoClient.getDB("butanon"); // get the database
-            DBCollection collection = db.getCollection("dataCollection"); // create new colection    
+            DBCollection collection = db.getCollection("myConnection"); // create new colection    
 
             for (int i = 1; i < 1001; i++) {
 
@@ -92,7 +92,7 @@ public class MogoDBSpeedTest {
                 mongoLogger.setLevel(Level.SEVERE);
                 MongoClient mongoClient = new MongoClient("localhost", 27017);
                 DB db = mongoClient.getDB("alonzo");
-                DBCollection collection = db.getCollection("dataCollection");
+                DBCollection collection = db.getCollection("myConnection");
 
                 BasicDBObject obj = new BasicDBObject("Column_1", i);
                 //  Removing data from the collection which has the key of Column_1 with the value equivalent to the value of
@@ -116,7 +116,7 @@ public class MogoDBSpeedTest {
             mongoLogger.setLevel(Level.SEVERE);
             MongoClient mongoClient = new MongoClient("localhost", 27017);
             DB db = mongoClient.getDB("alonzo");
-            DBCollection collection = db.getCollection("dataCollection");
+            DBCollection collection = db.getCollection("myConnection");
             for (int i = 1; i < 1001; i++) {
                 collection.remove(new BasicDBObject("Column_1", i));
                 System.out.println("Successfully deleted! " + i);
@@ -141,7 +141,7 @@ public class MogoDBSpeedTest {
             mongoLogger.setLevel(Level.SEVERE);
             MongoClient mongoClient = new MongoClient("localhost", 27017);
             DB db = mongoClient.getDB("alonzo");
-            DBCollection collection = db.getCollection("dataCollection");
+            DBCollection collection = db.getCollection("myConnection");
 
             // Creating a database object with the key of Column_1 with the value i
             BasicDBObject query = new BasicDBObject("Column_1", i);
@@ -214,7 +214,7 @@ public class MogoDBSpeedTest {
         mongoLogger.setLevel(Level.SEVERE);
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase("alonzo");
-        MongoCollection<Document> collection = database.getCollection("dataCollection");
+        MongoCollection<Document> collection = database.getCollection("myConnection");
 
         Block<Document> addCol1Value = new Block<Document>() {
             @Override
@@ -293,15 +293,12 @@ public class MogoDBSpeedTest {
 
     public static void main(String[] args) {
         MogoDBSpeedTest db = new MogoDBSpeedTest();
-//        try {
-//            db.insertWithConnection();
-//            db.deleteWithConnection();
-            db.insertWithOutConnection();
-//            db.deleteWithOutConnection();
 
-//        } catch (UnknownHostException ex) {
-//            Logger.getLogger(MongoDBSpeedTest.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+//        db.insertWithConnection();
+//            db.deleteWithConnection();
+//            db.insertWithOutConnection();
+            db.deleteWithOutConnection();
+
 //        db.getAVGAggregation();
 //        db.GetAverageUsingJavaLoop();
     }
